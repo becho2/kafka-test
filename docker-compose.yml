@@ -106,16 +106,15 @@ services:
       - kafka1
       - kafka2
 
-  kafka-exporter:
-    image: danielqsj/kafka-exporter
-    command:
-      [
-        '--kafka.server=kafka1:9092',
-        '--kafka.server=kafka2:9092',
-        '--kafka.server=kafka3:9092',
-      ]
+  jmx-exporter:
+    image: bitnami/jmx-exporter:latest
+    container_name: jmx-exporter
     ports:
-      - 9308:9308
+      - 5556:5556  # Prometheus에서 메트릭 수집
+    environment:
+      JMX_EXPORTER_CONFIG: /opt/jmx_exporter/config.yml
+    volumes:
+      - ./jmx_exporter.yml:/opt/jmx_exporter/config.yml
     depends_on:
       - kafka1
       - kafka2
