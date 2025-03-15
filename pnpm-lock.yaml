@@ -130,7 +130,7 @@ importers:
         specifier: ^10.0.0
         version: 10.3.8(@nestjs/common@10.3.8)(@nestjs/core@10.3.8)
       '@repo/prometheus':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/prometheus
       reflect-metadata:
         specifier: ^0.2.0
@@ -264,7 +264,7 @@ importers:
         specifier: ^20.3.1
         version: 20.11.24
       jest:
-        specifier: ^29.5.0
+        specifier: ^29.7.0
         version: 29.7.0(@types/node@20.11.24)
       ts-jest:
         specifier: ^29.1.0

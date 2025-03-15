@@ -1,0 +1,6 @@
+hostPort: localhost:9999
+rules:
+  - pattern: "kafka.server<type=(.+), name=(.+)><>(.+)"
+    name: "kafka_$1_$2"
+    labels:
+      metric: "$3"
