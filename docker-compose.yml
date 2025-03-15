@@ -1,37 +1,4 @@
-version: '3.9'
-
 services:
-  producer:
-    build:
-      context: .
-      dockerfile: ./docker/producer.Dockerfile
-    ports:
-      - '3002:3002'
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2048M
-    volumes:
-      - ./apps/producer/src:/app/apps/producer/src
-    networks:
-      - kafka-network
-
-  consumer:
-    build:
-      context: .
-      dockerfile: ./docker/consumer.Dockerfile
-    ports:
-      - '3001:3001'
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2048M
-    volumes:
-      - ./apps/consumer/src:/app/apps/consumer/src
-    networks:
-      - kafka-network
 
   prometheus:
     image: prom/prometheus:latest
@@ -155,15 +122,13 @@ services:
       - kafka3
       - prometheus
       - grafana
-      - consumer
-      - producer
     networks:
       - kafka-network
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     environment:
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka1:9092,kafka2:9092,kafka39092
+      - KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092,kafka3:9092
       - DYNAMIC_CONFIG_ENABLED=true
     depends_on:
       - kafka1
@@ -171,6 +136,8 @@ services:
       - kafka3
     ports:
       - 9000:8080
+    networks:
+      - kafka-network
 
 volumes:
   grafana-storage:
